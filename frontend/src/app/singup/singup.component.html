@@ -1,0 +1,15 @@
+<div>
+  <h1>Singup</h1>
+  <form [formGroup]="singupForm" (ngSubmit)="onSubmit()">
+    <label>Name</label>
+    <input formControlName="name"/>
+    <br>
+    <label>Email</label>
+    <input formControlName="email"/>
+    <br>
+    <label>Password</label>
+    <input formControlName="password" type="password"/>
+    <br>
+    <button type="submit">login</button>
+  </form>
+</div>
