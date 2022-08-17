@@ -1,0 +1,118 @@
+package com.example.springbootdieta.controller;
+
+import com.example.springbootdieta.dao.RoleRepository;
+
+import com.example.springbootdieta.dao.UserRepository;
+import com.example.springbootdieta.model.Role;
+import com.example.springbootdieta.model.Roles;
+import com.example.springbootdieta.model.CustomUser;
+import com.example.springbootdieta.model.AuthResponse;
+import com.example.springbootdieta.model.SignupRequest;
+import com.example.springbootdieta.model.User;
+import com.example.springbootdieta.security.JwtTokenUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.*;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+@RestController
+//@CrossOrigin(origins="http://localhost:4200")
+@RequestMapping("/auth")
+public class AuthController {
+    @Autowired
+    UserRepository userRepository;
+    @Autowired
+    RoleRepository roleRepository;
+//    Probablemente falte configurar algo para que no aparezca esto
+    @Autowired
+    PasswordEncoder encoder;
+    @Autowired
+    AuthenticationManager authenticationManager;
+    @Autowired
+    JwtTokenUtil jwtTokenUtil;
+
+//    @CrossOrigin(origins = "*", allowCredentials = "true")
+    @PostMapping("/login")
+//    @Validated cambie por que tenia validate en el otro pero este proyecto usa jakarta en vez de javax
+    public ResponseEntity<?> userLogin(@Validated @RequestBody User user){
+        System.out.println("AuthController -- userLogin");
+        Authentication authentication= null;
+        authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(user.getUserName(), user.getPassword()));
+        String token = jwtTokenUtil.generateJwtToken(authentication);
+        System.out.println(token);
+        CustomUser userBean = (CustomUser) authentication.getPrincipal();
+        List<String> roles = userBean.getAuthorities().stream()
+                .map(auth -> auth.getAuthority())
+                .collect(Collectors.toList());
+
+        AuthResponse authResponse = new AuthResponse();
+        authResponse.setUserName(user.getUserName());
+        authResponse.setRoles(roles);
+
+        HttpCookie cookie = ResponseCookie.from("Token", token)
+                .path("/")
+                .httpOnly(true)
+                .build();
+        return ResponseEntity.ok()
+                .header(HttpHeaders.SET_COOKIE, cookie.toString())
+                .body(authResponse);
+
+//        Falta revisar si setear la cookie funciona
+//        Cookie cookie = new Cookie("Token", token);
+//        Es false por que es localhost no https
+//        cookie.setSecure(false);
+//        cookie.setHttpOnly(true);
+//        response.addCookie(cookie);
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.add("Set-Cookie", "Token="+token);//+"; HttpOnly"
+//        AuthResponse authResponse = new AuthResponse();
+//        authResponse.setUserName(user.getUserName());
+//        authResponse.setRoles(roles);
+//        return new ResponseEntity<AuthResponse>(authResponse, headers, HttpStatus.OK);
+//        return ResponseEntity.ok(authResponse);
+        }
+
+    @PostMapping("/signup")
+    public ResponseEntity<?> userSignup(@Validated @RequestBody SignupRequest signupRequest){
+        if(userRepository.existsByUserName(signupRequest.getUserName())){
+            return ResponseEntity.badRequest().body("Username is already taken");
+        }
+        if(userRepository.existsByEmail(signupRequest.getEmail())){
+            return ResponseEntity.badRequest().body("This email is already registered");
+        }
+        User user = new User();
+        Set<Role> roles = new HashSet<>();
+        user.setUserName(signupRequest.getUserName());
+        user.setEmail(signupRequest.getEmail());
+        user.setPassword(encoder.encode(signupRequest.getPassword()));
+
+        String[] roleArr = {"user"};
+        roles.add(roleRepository.findByRoleName(Roles.ROLE_USER).get());
+        user.setRoles(roles);
+        userRepository.save(user);
+        return ResponseEntity.ok("User signed up successfully");
+
+    }
+    @PostMapping("/logout")
+    public ResponseEntity userLogout(){
+        HttpCookie cookie = ResponseCookie.from("Token", "")
+                .path("/")
+                .httpOnly(true)
+                .build();
+        return ResponseEntity.ok()
+                .header(HttpHeaders.SET_COOKIE, cookie.toString()).body("lOGOUT");
+    }
+}
+

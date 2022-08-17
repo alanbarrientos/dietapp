@@ -17,24 +17,26 @@ export class AuthService {
   constructor(private http: HttpClient, private router: Router) {}
 
   signup(user: User): Observable<any>{
-    return this.http.post(this.baseUrl + 'singup', user, {headers, responseType: 'text' })
+    return this.http.post(this.baseUrl + 'signup', user, {headers, responseType: 'text' })
       .pipe(catchError(this.handleError));
   }
 
   login(user: string, password: string){
     return this.http.post<any>(this.baseUrl + 'login',
-      {userName: user, password:password}, {headers})
+      {userName: user, password:password}, {headers, withCredentials:true})
       .pipe(catchError(this.handleError),
         map(userData => {
-          //Esto hay que cambiar con el tema de cookie
-          sessionStorage.setItem("username", user);
-          let tokenStr = "Bearer " + userData.token;
-          console.log("Token---  " + tokenStr);
-          sessionStorage.setItem("token", tokenStr);
-          sessionStorage.setItem("roles", JSON.stringify(userData.roles));
+          //Esto hay que cambiar con el tema de cookies
+          localStorage.setItem("username", user);
+          console.log("Se supone que ya tengo un token");
+          localStorage.setItem("roles", JSON.stringify(userData.roles));
           return userData;
         })
       );
+  }
+
+  public logout(){
+    return this.http.post<any>(this.baseUrl + 'logout','',{ observe: 'response', withCredentials: true });
   }
 
   private handleError(httpError: HttpErrorResponse) {

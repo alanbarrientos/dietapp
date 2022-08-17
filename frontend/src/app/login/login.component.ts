@@ -25,10 +25,10 @@ export class LoginComponent implements OnInit {
 
   onSubmit(){
     this.submitted = true;
-    this.authHttp.login(this.loginForm.value.userName, this.loginForm.value.password).subscribe(
+    this.authHttp.login(this.loginForm.value.name, this.loginForm.value.password).subscribe(
       data=>{
         this.isLoggedin = true
-        this.router.navigate(['/home']);
+        this.router.navigate(['/']);
       },
       error=>{
         console.log(error);

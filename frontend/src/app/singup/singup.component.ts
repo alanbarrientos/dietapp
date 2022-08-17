@@ -18,7 +18,7 @@ export class SingupComponent implements OnInit {
 
   ngOnInit(): void {
     this.singupForm = new FormGroup({
-      name: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(20)]),
+      name: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required, Validators.minLength(8)])
     });
@@ -26,9 +26,10 @@ export class SingupComponent implements OnInit {
 
   onSubmit(){
     this.submitted = true;
-    this.user.userName = this.singupForm.value.userName;
+    this.user.userName = this.singupForm.value.name;
     this.user.email = this.singupForm.value.email;
     this.user.password = this.singupForm.value.password;
+    console.log(this.user);
     this.registerUser();
   }
 
