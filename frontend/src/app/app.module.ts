@@ -11,6 +11,9 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import { RoleUserComponent } from './role-user/role-user.component';
 import { RoleAdminComponent } from './role-admin/role-admin.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { WeightHistoryComponent } from './weight-history/weight-history.component';
+import { AddWeightComponent } from './add-weight/add-weight.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +23,10 @@ import { RoleAdminComponent } from './role-admin/role-admin.component';
     SingupComponent,
     NotFoundComponent,
     RoleUserComponent,
-    RoleAdminComponent
+    RoleAdminComponent,
+    DashboardComponent,
+    WeightHistoryComponent,
+    AddWeightComponent
   ],
   imports: [
     BrowserModule,

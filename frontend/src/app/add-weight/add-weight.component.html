@@ -1,0 +1,13 @@
+<div>
+  <h1>Add Weight</h1>
+  <form [formGroup]="weightForm" (ngSubmit)="onSubmit()">
+    <label>Date</label>
+    <input formControlName="date"/>
+    <br>
+    <label>Weight</label>
+    <input formControlName="weight"/>
+    <br>
+    <button type="submit">Add</button>
+  </form>
+</div>
+

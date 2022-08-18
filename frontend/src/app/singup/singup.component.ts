@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import { User } from '../models/user.model';
 import {AuthService} from "../services/auth.service";
 
@@ -9,26 +9,40 @@ import {AuthService} from "../services/auth.service";
   styleUrls: ['./singup.component.css']
 })
 export class SingupComponent implements OnInit {
-  singupForm!:FormGroup;
-  user = new User('', '', '');
+  roles = [
+    {name:'User', id:1, selected: true},
+    {name:'Admin', id:2, selected: false},
+  ]
+  signupForm!:FormGroup;
+  user = new User('', '', '', false);
   isRegistered = false;
   submitted = false;
   errorMessage = '';
   constructor(private authHttp: AuthService) { }
 
   ngOnInit(): void {
-    this.singupForm = new FormGroup({
+    this.signupForm = new FormGroup({
       name: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', [Validators.required, Validators.minLength(8)])
+      password: new FormControl('', [Validators.required, Validators.minLength(8)]),
+      gender: new FormControl('', [Validators.required]),
     });
+  }
+  createRoles(rolesList: any[]): FormArray{
+    const arr = rolesList.map(role => {
+      return new FormControl(role.selected)
+    });
+    return new FormArray(arr);
   }
 
   onSubmit(){
     this.submitted = true;
-    this.user.userName = this.singupForm.value.name;
-    this.user.email = this.singupForm.value.email;
-    this.user.password = this.singupForm.value.password;
+    this.user.userName = this.signupForm.value.name;
+    this.user.email = this.signupForm.value.email;
+    this.user.password = this.signupForm.value.password;
+    if(this.signupForm.value.gender.toLowerCase() == 'male'){
+    this.user.isMale=true;
+    }
     console.log(this.user);
     this.registerUser();
   }

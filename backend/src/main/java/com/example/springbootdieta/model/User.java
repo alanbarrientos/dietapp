@@ -6,13 +6,14 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name="users")
+@Table(name="user")
 public class User{
 
     @Id
@@ -24,13 +25,23 @@ public class User{
     private String email;
     @Column(name="password")
     private String password;
+    @Column(name = "gender")
+    private boolean gender;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name ="user_role",
             joinColumns = @JoinColumn(name="USER_ID", referencedColumnName = "ID"),
             inverseJoinColumns = @JoinColumn(name="ROLE_ID", referencedColumnName="ID"))
     private Set<Role> roles = new HashSet<>();
 
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<Weight> weight = new HashSet<>();
+
+    public void addWeight(Weight weight){
+        this.weight.add(weight);
+    }
 }
 
 

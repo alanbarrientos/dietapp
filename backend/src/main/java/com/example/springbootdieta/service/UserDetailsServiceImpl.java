@@ -1,7 +1,7 @@
 package com.example.springbootdieta.service;
 
 import com.example.springbootdieta.dao.UserRepository;
-import com.example.springbootdieta.model.CustomUser;
+import com.example.springbootdieta.model.SpringUser;
 import com.example.springbootdieta.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,6 +21,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         User user = userResitory.findByUserName(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Usear with "
                 + "user name " + username + " not found"));
-        return CustomUser.createInstance(user);
+        return SpringUser.createInstance(user);
     }
 }

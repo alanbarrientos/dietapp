@@ -3,12 +3,7 @@ package com.example.springbootdieta.controller;
 import com.example.springbootdieta.dao.RoleRepository;
 
 import com.example.springbootdieta.dao.UserRepository;
-import com.example.springbootdieta.model.Role;
-import com.example.springbootdieta.model.Roles;
-import com.example.springbootdieta.model.CustomUser;
-import com.example.springbootdieta.model.AuthResponse;
-import com.example.springbootdieta.model.SignupRequest;
-import com.example.springbootdieta.model.User;
+import com.example.springbootdieta.model.*;
 import com.example.springbootdieta.security.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
@@ -19,8 +14,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -52,7 +45,7 @@ public class AuthController {
                 new UsernamePasswordAuthenticationToken(user.getUserName(), user.getPassword()));
         String token = jwtTokenUtil.generateJwtToken(authentication);
         System.out.println(token);
-        CustomUser userBean = (CustomUser) authentication.getPrincipal();
+        SpringUser userBean = (SpringUser) authentication.getPrincipal();
         List<String> roles = userBean.getAuthorities().stream()
                 .map(auth -> auth.getAuthority())
                 .collect(Collectors.toList());
@@ -86,6 +79,7 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> userSignup(@Validated @RequestBody SignupRequest signupRequest){
+        System.out.println("Estoy dentro de signup");
         if(userRepository.existsByUserName(signupRequest.getUserName())){
             return ResponseEntity.badRequest().body("Username is already taken");
         }
@@ -97,9 +91,9 @@ public class AuthController {
         user.setUserName(signupRequest.getUserName());
         user.setEmail(signupRequest.getEmail());
         user.setPassword(encoder.encode(signupRequest.getPassword()));
-
+        user.setGender(signupRequest.isMale());
         String[] roleArr = {"user"};
-        roles.add(roleRepository.findByRoleName(Roles.ROLE_USER).get());
+        roles.add(roleRepository.findByRoleName(RoleList.ROLE_USER).get());
         user.setRoles(roles);
         userRepository.save(user);
         return ResponseEntity.ok("User signed up successfully");

@@ -1,6 +1,6 @@
 <div>
   <h1>Singup</h1>
-  <form [formGroup]="singupForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
     <label>Name</label>
     <input formControlName="name"/>
     <br>
@@ -10,6 +10,8 @@
     <label>Password</label>
     <input formControlName="password" type="password"/>
     <br>
-    <button type="submit">login</button>
+    <label>gender: male or female</label>
+    <input formControlName="gender">
+    <button type="submit">Signup</button>
   </form>
 </div>

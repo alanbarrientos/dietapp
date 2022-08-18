@@ -3,6 +3,7 @@ import {HttpClient, HttpErrorResponse, HttpHeaders, HttpStatusCode} from "@angul
 import {Router} from "@angular/router";
 import {User} from "../models/user.model";
 import {catchError, Observable, throwError} from "rxjs";
+import {Weight} from "../models/weight.model";
 
 const headers = new HttpHeaders().set('Content-Type', 'text');
 @Injectable({
@@ -12,12 +13,24 @@ export class UserService {
   private baseUrl = 'http://localhost:8080/user/';
 
 
+
   constructor(private http: HttpClient, private router: Router) {}
 
   getByUserRole():  Observable<any>{
     return this.http.get(this.baseUrl+'displayuser', {responseType:'text', withCredentials: true})
       .pipe(catchError(err => this.handleError(err)));
   }
+
+  getWeightHistory():  Observable<Weight[]>{
+    return this.http.get<Weight[]>(this.baseUrl+'getweighthistory', {responseType:'json', withCredentials: true})
+      .pipe(catchError(err => this.handleError(err)));
+
+  }
+  addWeight(weight:Weight):Observable<any>{
+    return this.http.post(this.baseUrl+'postweight', weight, {withCredentials: true})
+      .pipe(catchError(err => this.handleError(err)));
+  }
+
   private handleError(httpError: HttpErrorResponse) {
     let message:string = '';
     console.log(httpError.status)

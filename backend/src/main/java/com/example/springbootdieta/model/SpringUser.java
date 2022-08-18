@@ -9,7 +9,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class CustomUser implements UserDetails {
+public class SpringUser implements UserDetails {
     private static final long serialVersionUID = -4709084843450077569L;
     private Integer id;
     private String userName;
@@ -17,7 +17,7 @@ public class CustomUser implements UserDetails {
     @JsonIgnore
     private String password;
     private Collection<? extends GrantedAuthority> authorities;
-    CustomUser(Integer id, String userName, String email,
+    SpringUser(Integer id, String userName, String email,
                String password, Collection<? extends GrantedAuthority> authorities){
         this.id = id;
         this.userName = userName;
@@ -26,12 +26,12 @@ public class CustomUser implements UserDetails {
         this.authorities = authorities;
     }
 
-    public static CustomUser createInstance(User user) {
+    public static SpringUser createInstance(User user) {
         List<GrantedAuthority> authorities = user.getRoles()
                 .stream()
                 .map(role -> new SimpleGrantedAuthority(role.getRoleName().name()))
                 .collect(Collectors.toList());
-        return new CustomUser(user.getId(), user.getUserName(),
+        return new SpringUser(user.getId(), user.getUserName(),
                 user.getEmail(), user.getPassword(), authorities);
     }
     @Override
@@ -79,8 +79,8 @@ public class CustomUser implements UserDetails {
 
     @Override
     public boolean equals(Object rhs) {
-        if (rhs instanceof CustomUser) {
-            return userName.equals(((CustomUser) rhs).userName);
+        if (rhs instanceof SpringUser) {
+            return userName.equals(((SpringUser) rhs).userName);
         }
         return false;
     }

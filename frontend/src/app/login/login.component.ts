@@ -9,7 +9,7 @@ import {AuthService} from "../services/auth.service";
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  loginForm!: FormGroup
+  loginForm!: FormGroup;
   submitted = false;
   errorMessage = '';
   isLoggedin = false;

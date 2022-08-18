@@ -8,13 +8,19 @@ import {RoleUserComponent} from "./role-user/role-user.component";
 import {RoleAdminComponent} from "./role-admin/role-admin.component";
 import {AuthGuard} from "./auth.guard";
 import {LoggedGuard} from "./logged.guard";
+import {DashboardComponent} from "./dashboard/dashboard.component";
+import {WeightHistoryComponent} from "./weight-history/weight-history.component";
+import {AddWeightComponent} from "./add-weight/add-weight.component";
 
 const routes: Routes = [
   {path:"", component:LandingComponent},
   {path:"login", component:LoginComponent},
   {path:"singup", component:SingupComponent},
   {path:"role-user", component:RoleUserComponent, canActivate:[LoggedGuard]},
-  {path:"role-admin", component:RoleAdminComponent, canActivate: [LoggedGuard,AuthGuard]},
+  {path:"role-admin", component:RoleAdminComponent, canActivate:[LoggedGuard,AuthGuard]},
+  {path:"dashboard", component:DashboardComponent, canActivate:[LoggedGuard]},
+  {path:"weight-history", component:WeightHistoryComponent, canActivate:[LoggedGuard]},
+  {path:"add-weight", component:AddWeightComponent, canActivate:[LoggedGuard]},
   {path:"**", component:NotFoundComponent}
 ];
 

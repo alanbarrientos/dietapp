@@ -1,6 +1,6 @@
 package com.example.springbootdieta.security;
 
-import com.example.springbootdieta.model.CustomUser;
+import com.example.springbootdieta.model.SpringUser;
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
@@ -15,7 +15,7 @@ public class JwtTokenUtil {
     private long jwtTokenExpiration;
 
     public String generateJwtToken(Authentication authentication) {
-        CustomUser userPrincipal = (CustomUser)authentication.getPrincipal();
+        SpringUser userPrincipal = (SpringUser)authentication.getPrincipal();
         return Jwts.builder()
                 .setSubject(userPrincipal.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
