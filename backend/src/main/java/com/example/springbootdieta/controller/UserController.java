@@ -14,10 +14,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
@@ -60,7 +56,7 @@ public class UserController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
         return ResponseEntity.ok()
-                .body(weightRepository.findAllByUser_UserNameOrderByDate(currentPrincipalName).stream()
+                .body(weightRepository.findAllByUser_UserNameOrderByDateDesc(currentPrincipalName).stream()
                         .map(w->w.toDto())
                         .collect(Collectors.toList()));
     }

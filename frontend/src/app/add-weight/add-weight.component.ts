@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Weight} from "../models/weight.model";
 import {UserService} from "../services/user.service";
@@ -10,7 +10,8 @@ import {UserService} from "../services/user.service";
 })
 export class AddWeightComponent implements OnInit {
   weightForm!:FormGroup;
-
+  @Output() close = new EventEmitter();
+  @Output() added = new EventEmitter();
   constructor(private http:UserService) { }
 
   ngOnInit(): void {
@@ -25,5 +26,11 @@ export class AddWeightComponent implements OnInit {
     this.http.addWeight(weight).subscribe(
       data => {console.log('parece que agregamos un registro de peso')},
       error => {console.log('error al intentar agregar un peso')})
+    this.added.emit();
+    this.onCloseClick();
+  }
+
+  onCloseClick(){
+    this.close.emit();
   }
 }

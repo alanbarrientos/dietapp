@@ -1,7 +1,11 @@
+<br><br>
+<app-add-weight (close)="AddOpenOrClose()" (added)="refresh()" *ngIf="modalAdd"></app-add-weight>
 <div class="column is-half ">
+  <app-chart-weight></app-chart-weight>
+  <button (click)="AddOpenOrClose()">add</button>
   <br>
 <div *ngFor="let weight of weights">
-  <div (click)="onClick(weight)" class="box">
+  <div (click)="openWeight(weight)" class="box">
     <h1>Date:{{weight.date}}</h1>
     <br>
     <h1>Weight:{{weight.weight}}</h1>
@@ -9,5 +13,5 @@
   <br>
 </div>
 </div>
-<app-modal (close)="close()" *ngIf="modalOpen" [weight]="weightForSent"></app-modal>
+<app-modal (close)="closeWeight()" *ngIf="modalOpen" [weight]="weightForSent"></app-modal>
 

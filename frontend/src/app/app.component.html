@@ -1,10 +1,47 @@
-<button routerLink="">landing</button>
-<button routerLink="/login">login</button>
-<button routerLink="/singup">singup</button>
-<button routerLink="/role-user">role-user</button>
-<button routerLink="/role-admin">role-admin</button>
-<button routerLink="/weight-history">weight-history</button>
-<button routerLink="/add-weight">add-weight</button>
-<button routerLink="/chart-weight">chart-weight</button>
-<button (click)="logout()">logout</button>
+<nav class="navbar" role="navigation" aria-label="main navigation">
+
+  <div id="navbarBasicExample" class="navbar-menu">
+    <div class="navbar-start">
+      <a class="navbar-item" routerLink="">
+        Landing
+      </a>
+
+      <a class="navbar-item" routerLink="weight-history">
+        Weight-History
+      </a>
+
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+          More
+        </a>
+
+        <div class="navbar-dropdown">
+          <a class="navbar-item" routerLink="/role-user">
+            Role-User
+          </a>
+          <a class="navbar-item" routerLink="/role-admin">
+            Role-Admin
+          </a>
+          <hr class="navbar-divider">
+        </div>
+      </div>
+    </div>
+
+    <div class="navbar-end">
+      <div class="navbar-item">
+        <div class="buttons">
+          <a class="button is-primary" routerLink="/signup">
+            <strong>Sign up</strong>
+          </a>
+          <a class="button is-light" routerLink="/login">
+            Log in
+          </a>
+          <a class="button is-light" (click)="logout()">
+            Logout
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
 <router-outlet></router-outlet>
