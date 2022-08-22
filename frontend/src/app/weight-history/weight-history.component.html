@@ -1,7 +1,13 @@
-<div *ngFor="let weight of weights">
-  <hr>
-  <h1>Date:{{weight.date}}</h1>
+<div class="column is-half ">
   <br>
-  <h1>Weight:{{weight.weight}}</h1>
-  <hr>
+<div *ngFor="let weight of weights">
+  <div (click)="onClick(weight)" class="box">
+    <h1>Date:{{weight.date}}</h1>
+    <br>
+    <h1>Weight:{{weight.weight}}</h1>
+  </div>
+  <br>
 </div>
+</div>
+<app-modal (close)="close()" *ngIf="modalOpen" [weight]="weightForSent"></app-modal>
+

@@ -60,7 +60,7 @@ public class UserController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
         return ResponseEntity.ok()
-                .body(weightRepository.findAllByUser_UserName(currentPrincipalName).stream()
+                .body(weightRepository.findAllByUser_UserNameOrderByDate(currentPrincipalName).stream()
                         .map(w->w.toDto())
                         .collect(Collectors.toList()));
     }

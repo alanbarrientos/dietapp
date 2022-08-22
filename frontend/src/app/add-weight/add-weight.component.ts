@@ -21,7 +21,7 @@ export class AddWeightComponent implements OnInit {
   }
 
   onSubmit(){
-    let weight: Weight = new Weight(this.weightForm.value.weight, this.weightForm.value.date)
+    let weight: Weight = new Weight(-1, this.weightForm.value.weight, this.weightForm.value.date)
     this.http.addWeight(weight).subscribe(
       data => {console.log('parece que agregamos un registro de peso')},
       error => {console.log('error al intentar agregar un peso')})

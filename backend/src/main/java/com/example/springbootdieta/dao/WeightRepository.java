@@ -12,5 +12,7 @@ import java.util.Optional;
 
 @Repository
 public interface WeightRepository extends JpaRepository<Weight, Integer> {
-  List<Weight> findAllByUser_UserName(String username);
+  List<Weight> findAllByUser_UserNameOrderByDate(String username);
+
+
 }

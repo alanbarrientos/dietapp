@@ -42,6 +42,7 @@ public class Weight {
 
     public WeightDto toDto() {
         WeightDto dto = new WeightDto();
+        dto.setId(id);
         dto.setWeight(weight.toString());
         dto.setDate(date);
         return dto;
@@ -51,6 +52,7 @@ public class Weight {
     @Setter
     @NoArgsConstructor
     public static class WeightDto {
+        Integer id;
         String weight; // 34.7
         Date date;
     }

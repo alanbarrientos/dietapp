@@ -14,6 +14,9 @@ import { RoleAdminComponent } from './role-admin/role-admin.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { WeightHistoryComponent } from './weight-history/weight-history.component';
 import { AddWeightComponent } from './add-weight/add-weight.component';
+import { ChartWeightComponent } from './chart-weight/chart-weight.component';
+import {NgxEchartsModule} from "ngx-echarts";
+import { ModalComponent } from './weight-history/modal/modal.component';
 
 @NgModule({
   declarations: [
@@ -26,13 +29,19 @@ import { AddWeightComponent } from './add-weight/add-weight.component';
     RoleAdminComponent,
     DashboardComponent,
     WeightHistoryComponent,
-    AddWeightComponent
+    AddWeightComponent,
+    ChartWeightComponent,
+    ModalComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgxEchartsModule.forRoot({
+      echarts: () => import('echarts')
+    })
+
   ],
   providers: [],
   bootstrap: [AppComponent]

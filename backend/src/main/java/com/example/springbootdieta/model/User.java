@@ -37,6 +37,7 @@ public class User{
 
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OrderBy("date")
     private Set<Weight> weight = new HashSet<>();
 
     public void addWeight(Weight weight){
