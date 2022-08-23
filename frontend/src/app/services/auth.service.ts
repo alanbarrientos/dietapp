@@ -3,8 +3,8 @@ import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {User} from "../models/user.model";
 import {catchError, map, Observable, throwError} from "rxjs";
+import {GlobalService} from "./islogged.service";
 
-//Falta cambiar algo aca
 
 const headers = new HttpHeaders().set('Content-Type', 'application/json');
 @Injectable({
@@ -14,7 +14,7 @@ export class AuthService {
   private baseUrl = 'http://localhost:8080/auth/';
 
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router, private globalSrv: GlobalService) {}
 
   signup(user: User): Observable<any>{
     return this.http.post(this.baseUrl + 'signup', user, {headers, responseType: 'text' })
@@ -26,9 +26,8 @@ export class AuthService {
       {userName: user, password:password}, {headers, withCredentials:true})
       .pipe(catchError(this.handleError),
         map(userData => {
-          //Esto hay que cambiar con el tema de cookies
-          localStorage.setItem("username", user);
-          console.log("Se supone que ya tengo un token");
+          //localStorage is set with key username and islogged alert
+          this.globalSrv.theItem=user;
           localStorage.setItem("roles", JSON.stringify(userData.roles));
           return userData;
         })

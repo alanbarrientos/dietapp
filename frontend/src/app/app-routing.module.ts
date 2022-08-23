@@ -16,7 +16,7 @@ import {ChartWeightComponent} from "./chart-weight/chart-weight.component";
 const routes: Routes = [
   {path:"", component:LandingComponent},
   {path:"login", component:LoginComponent},
-  {path:"singup", component:SingupComponent},
+  {path:"signup", component:SingupComponent},
   {path:"role-user", component:RoleUserComponent, canActivate:[LoggedGuard]},
   {path:"role-admin", component:RoleAdminComponent, canActivate:[LoggedGuard,AuthGuard]},
   {path:"dashboard", component:DashboardComponent, canActivate:[LoggedGuard]},

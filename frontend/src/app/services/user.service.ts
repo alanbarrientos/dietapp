@@ -4,6 +4,7 @@ import {Router} from "@angular/router";
 import {User} from "../models/user.model";
 import {catchError, Observable, throwError} from "rxjs";
 import {Weight} from "../models/weight.model";
+import {GlobalService} from "./islogged.service";
 
 const headers = new HttpHeaders().set('Content-Type', 'text');
 @Injectable({
@@ -14,7 +15,7 @@ export class UserService {
 
 
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router, private globalSrv: GlobalService ) {}
 
   getByUserRole():  Observable<any>{
     return this.http.get(this.baseUrl+'displayuser', {responseType:'text', withCredentials: true})
@@ -33,14 +34,17 @@ export class UserService {
 
   private handleError(httpError: HttpErrorResponse) {
     let message:string = '';
-    console.log(httpError.status)
+    console.log(httpError.status);
    if(httpError.status == HttpStatusCode.Unauthorized){
-     console.log('Estoy en un error 401')
-     this.router.navigateByUrl('/login')
+     console.log('Estoy en un error 401');
+     this.router.navigateByUrl('/login');
+     this.globalSrv.theItem=null;
+     // localStorage.clear();
+
    }
 
     if (httpError.error instanceof ProgressEvent) {
-      console.log('in progrss event')
+      console.log('in progrss event');
       message = "Network error";
     }
       // if (httpError.error instanceof ErrorEvent) {
