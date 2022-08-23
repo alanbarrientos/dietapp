@@ -13,10 +13,10 @@ import { RoleUserComponent } from './role-user/role-user.component';
 import { RoleAdminComponent } from './role-admin/role-admin.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { WeightHistoryComponent } from './weight-history/weight-history.component';
-import { AddWeightComponent } from './add-weight/add-weight.component';
+import { AddOrEditWeightComponent } from './addoredit-weight/add-or-edit-weight.component';
 import { ChartWeightComponent } from './chart-weight/chart-weight.component';
 import {NgxEchartsModule} from "ngx-echarts";
-import { ModalComponent } from './weight-history/modal/modal.component';
+import {MaterialModule} from "./MaterialModule";
 
 @NgModule({
   declarations: [
@@ -29,9 +29,8 @@ import { ModalComponent } from './weight-history/modal/modal.component';
     RoleAdminComponent,
     DashboardComponent,
     WeightHistoryComponent,
-    AddWeightComponent,
+    AddOrEditWeightComponent,
     ChartWeightComponent,
-    ModalComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +39,8 @@ import { ModalComponent } from './weight-history/modal/modal.component';
     HttpClientModule,
     NgxEchartsModule.forRoot({
       echarts: () => import('echarts')
-    })
+    }),
+    MaterialModule
 
   ],
   providers: [],

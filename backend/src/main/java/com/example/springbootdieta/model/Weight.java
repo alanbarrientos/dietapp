@@ -3,6 +3,7 @@ package com.example.springbootdieta.model;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -11,6 +12,7 @@ import java.util.Date;
 @Entity
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 @Table(name="weight")
 public class Weight {
@@ -37,6 +39,9 @@ public class Weight {
                 dto.getDate()!=null ? dto.getDate() : new Date(),
                 new BigDecimal(dto.getWeight())
         );
+        if(dto.id!=-1){
+            weight.setId(dto.id);
+        }
         return weight;
     }
 

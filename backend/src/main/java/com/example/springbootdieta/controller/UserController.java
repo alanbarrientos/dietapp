@@ -69,8 +69,29 @@ public class UserController {
         User user = userRepository.getUserByUserName(currentPrincipalName);
         Weight weight = Weight.fromDto(weightR);
         weight.setUser(user);
+        System.out.println("Estoy en agregar");
+        weightRepository.save(weight);
+        return ResponseEntity.ok().build();
+    }
+    @PostMapping("/postweight/{id}")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+    public ResponseEntity<?> updateWeight(@Validated @RequestBody WeightDto weightR) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        User user = userRepository.getUserByUserName(currentPrincipalName);
+        Weight weight = Weight.fromDto(weightR);
+        weight.setUser(user);
+        System.out.print(weight.toString());
         weightRepository.save(weight);
         return ResponseEntity.ok().build();
     }
 
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+    public ResponseEntity<?> deleteWeight(@PathVariable("id") Integer id){
+        if(id>-1) {
+            weightRepository.deleteById(id);
+        }
+        return ResponseEntity.ok().build();
+    }
 }

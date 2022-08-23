@@ -12,7 +12,7 @@ import {Router} from "@angular/router";
 export class WeightHistoryComponent implements OnInit, OnDestroy {
   modalAdd=false;
   modalOpen=false;
-  weightForSent!:Weight;
+  weightForSent:Weight|null=null;
   weights: Weight[] = [];
   constructor(private http: UserService, private el:ElementRef, private router:Router) { }
 
@@ -26,12 +26,13 @@ export class WeightHistoryComponent implements OnInit, OnDestroy {
   }
 
   AddOpenOrClose(){
+    this.weightForSent=null;
     this.modalAdd=!this.modalAdd;
   }
 
   openWeight(weight:Weight){
     this.weightForSent=weight;
-    this.modalOpen=!this.modalOpen;
+    this.modalAdd=!this.modalAdd;
   }
   closeWeight(){
     this.modalOpen=!this.modalOpen;
@@ -39,4 +40,6 @@ export class WeightHistoryComponent implements OnInit, OnDestroy {
   refresh(){
     window.location.reload()
   }
+
+
 }

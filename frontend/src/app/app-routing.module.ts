@@ -10,7 +10,7 @@ import {AuthGuard} from "./auth.guard";
 import {LoggedGuard} from "./logged.guard";
 import {DashboardComponent} from "./dashboard/dashboard.component";
 import {WeightHistoryComponent} from "./weight-history/weight-history.component";
-import {AddWeightComponent} from "./add-weight/add-weight.component";
+import {AddOrEditWeightComponent} from "./addoredit-weight/add-or-edit-weight.component";
 import {ChartWeightComponent} from "./chart-weight/chart-weight.component";
 
 const routes: Routes = [
@@ -21,7 +21,7 @@ const routes: Routes = [
   {path:"role-admin", component:RoleAdminComponent, canActivate:[LoggedGuard,AuthGuard]},
   {path:"dashboard", component:DashboardComponent, canActivate:[LoggedGuard]},
   {path:"weight-history", component:WeightHistoryComponent, canActivate:[LoggedGuard]},
-  {path:"add-weight", component:AddWeightComponent, canActivate:[LoggedGuard]},
+  {path:"add-weight", component:AddOrEditWeightComponent, canActivate:[LoggedGuard]},
   {path:"chart-weight", component:ChartWeightComponent, canActivate:[LoggedGuard]},
   {path:"**", component:NotFoundComponent}
 ];

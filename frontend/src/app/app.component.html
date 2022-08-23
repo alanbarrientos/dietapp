@@ -6,11 +6,11 @@
         Landing
       </a>
 
-      <a class="navbar-item" routerLink="weight-history">
+      <a class="navbar-item" routerLink="weight-history" *ngIf="login">
         Weight-History
       </a>
 
-      <div class="navbar-item has-dropdown is-hoverable">
+      <div class="navbar-item has-dropdown is-hoverable" *ngIf="login">
         <a class="navbar-link">
           More
         </a>

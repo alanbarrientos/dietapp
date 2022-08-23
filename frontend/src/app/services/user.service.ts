@@ -31,6 +31,14 @@ export class UserService {
     return this.http.post(this.baseUrl+'postweight', weight, {withCredentials: true})
       .pipe(catchError(err => this.handleError(err)));
   }
+  updateWeight(weight:Weight):Observable<any>{
+    return this.http.post(this.baseUrl + 'postweight/'+weight.id, weight, {withCredentials: true})
+      .pipe(catchError(err => this.handleError(err)));
+  }
+  deleteWeight(id: number):Observable<any>{
+    return this.http.delete(this.baseUrl + id, {withCredentials:true})
+      .pipe(catchError(err => this.handleError(err)));
+  }
 
   private handleError(httpError: HttpErrorResponse) {
     let message:string = '';
