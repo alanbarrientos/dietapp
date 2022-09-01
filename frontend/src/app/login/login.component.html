@@ -1,12 +1,13 @@
-<div>
-  <h1>Login</h1>
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <label>Name</label>
-    <input formControlName="name"/>
+<form class="box" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <div class="field">
+    <h1 class="title">Login</h1>
+    <label class="label">Name</label>
+    <input formControlName="name" class="input"/>
+  </div>
+  <div class="field">
+    <label class="label">Password</label>
+    <input formControlName="password" type="password" class="input"/>
+  </div>
     <br>
-    <label>Password</label>
-    <input formControlName="password" type="password"/>
-    <br>
-    <button type="submit">login</button>
-  </form>
-</div>
+    <button type="submit" class="button is-success">login</button>
+</form>

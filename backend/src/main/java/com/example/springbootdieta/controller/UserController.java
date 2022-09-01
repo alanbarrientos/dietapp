@@ -14,6 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.stream.Collectors;
 
 @RestController
@@ -68,6 +69,9 @@ public class UserController {
         String currentPrincipalName = authentication.getName();
         User user = userRepository.getUserByUserName(currentPrincipalName);
         Weight weight = Weight.fromDto(weightR);
+        if(weight.getWeight().intValue() < 10){
+            return ResponseEntity.badRequest().build();
+        }
         weight.setUser(user);
         System.out.println("Estoy en agregar");
         weightRepository.save(weight);

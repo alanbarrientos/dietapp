@@ -1,7 +1,7 @@
-import {Component, OnChanges, OnInit, SimpleChanges,} from '@angular/core';
+import {Component, ElementRef, OnChanges, OnInit, SimpleChanges,} from '@angular/core';
 import {Router} from "@angular/router";
 import {AuthService} from "./services/auth.service";
-import {GlobalService} from "./services/islogged.service";
+import {IsLoggedService} from "./services/is-logged.service";
 
 @Component({
   selector: 'app-root',
@@ -9,8 +9,9 @@ import {GlobalService} from "./services/islogged.service";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit{
+  error=false;
   login=false;
-  constructor(private router:Router, private http:AuthService, private globalSrv: GlobalService) {
+  constructor(private router:Router, private http:AuthService, private globalSrv: IsLoggedService) {
   }
 
   ngOnInit() {

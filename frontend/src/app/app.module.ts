@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {ErrorHandler, NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -8,7 +8,7 @@ import { LandingComponent } from './landing/landing.component';
 import { SingupComponent } from './singup/singup.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import {ReactiveFormsModule} from "@angular/forms";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import { RoleUserComponent } from './role-user/role-user.component';
 import { RoleAdminComponent } from './role-admin/role-admin.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -17,6 +17,9 @@ import { AddOrEditWeightComponent } from './addoredit-weight/add-or-edit-weight.
 import { ChartWeightComponent } from './chart-weight/chart-weight.component';
 import {NgxEchartsModule} from "ngx-echarts";
 import {MaterialModule} from "./MaterialModule";
+import {HttpInterceptorService} from "./services/http-interceptor.service";
+import {ToastrModule} from "ngx-toastr";
+
 
 @NgModule({
   declarations: [
@@ -40,10 +43,17 @@ import {MaterialModule} from "./MaterialModule";
     NgxEchartsModule.forRoot({
       echarts: () => import('echarts')
     }),
-    MaterialModule
+    MaterialModule,
+    ToastrModule.forRoot()
 
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpInterceptorService,
+      multi:true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

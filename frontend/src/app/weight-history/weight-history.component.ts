@@ -9,21 +9,19 @@ import {Router} from "@angular/router";
   templateUrl: './weight-history.component.html',
   styleUrls: ['./weight-history.component.css']
 })
-export class WeightHistoryComponent implements OnInit, OnDestroy {
+export class WeightHistoryComponent implements OnInit  {
   modalAdd=false;
   modalOpen=false;
   weightForSent:Weight|null=null;
   weights: Weight[] = [];
+  dateWeights!:Date[];
   constructor(private http: UserService, private el:ElementRef, private router:Router) { }
 
   ngOnInit(): void {
-    document.body.appendChild(this.el.nativeElement);
     this.http.getWeightHistory().subscribe(weight => this.weights = weight);
+
   }
 
-  ngOnDestroy(){
-    this.el.nativeElement.remove();
-  }
 
   AddOpenOrClose(){
     this.weightForSent=null;

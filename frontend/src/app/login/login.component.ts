@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import {Router} from "@angular/router";
 import {AuthService} from "../services/auth.service";
-import { GlobalService } from '../services/islogged.service';
+import { IsLoggedService } from '../services/is-logged.service';
 
 @Component({
   selector: 'app-login',
@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
     this.authHttp.login(this.loginForm.value.name, this.loginForm.value.password).subscribe(
       data=>{
         this.isLoggedin = true
-        this.router.navigate(['/']);
+        this.router.navigate(['/weight-history']);
       },
       error=>{
         console.log(error);

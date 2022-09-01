@@ -105,8 +105,7 @@ public class AuthController {
                 .path("/")
                 .httpOnly(true)
                 .build();
-        return ResponseEntity.ok()
-                .header(HttpHeaders.SET_COOKIE, cookie.toString()).body("lOGOUT");
+        return ResponseEntity.ok().build();
     }
 }
 

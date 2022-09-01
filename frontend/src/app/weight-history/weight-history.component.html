@@ -1,18 +1,33 @@
 <br><br>
 <app-add-weight (close)="AddOpenOrClose()" (refresh)="refresh()" *ngIf="modalAdd" [weight]="weightForSent"></app-add-weight>
 <div class="column is-half ">
-  <app-chart-weight></app-chart-weight>
   <button (click)="AddOpenOrClose()" class="button">add</button>
+  <app-chart-weight></app-chart-weight>
   <br>
   <br>
-<div *ngFor="let weight of weights">
-  <div (click)="openWeight(weight)" class="box">
-    <h1>Date:{{weight.date.toString().split('T')[0]}}</h1>
+  <div *ngFor="let weight of weights">
+    <div (click)="openWeight(weight)" class="box">
+      <h1>Date:{{weight.date.toString().split('T')[0]}}</h1>
+      <br>
+      <h1>Weight:{{weight.weight}}</h1>
+    </div>
     <br>
-    <h1>Weight:{{weight.weight}}</h1>
   </div>
-  <br>
 </div>
-</div>
-<!--<app-modal (close)="closeWeight()" (added)="refresh()" *ngIf="modalOpen" ></app-modal>-->
+<table class="table is-fullwidth is-scrollable">
+  <thead>
+  <tr>
+    <th>Date</th>
+    <th>Weight</th>
+  </tr>
+  </thead>
+  <tbody height="200px">
+  <ng-container *ngFor="let weight of weights">
+    <tr>
+      <th>{{weight.date.toString().split('T')[0]}}</th>
+      <th>{{weight.weight}}</th>
+    </tr>
+  </ng-container>
+  </tbody>
+</table>
 

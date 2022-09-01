@@ -2,7 +2,7 @@ import {BehaviorSubject} from 'rxjs';
 import {Injectable} from "@angular/core";
 
 @Injectable({providedIn: 'root'})
-export class GlobalService {
+export class IsLoggedService {
   itemValue = new BehaviorSubject(this.theItem);
 
   set theItem(value) {

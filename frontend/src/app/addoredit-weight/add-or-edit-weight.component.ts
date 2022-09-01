@@ -6,7 +6,7 @@ import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/
 @Component({
   selector: 'app-add-weight',
   templateUrl: './add-or-edit-weight.component.html',
-  styleUrls: ['./add-or-edit-weight.component.css'],
+  styleUrls: ['./add-or-edit-weight.component.Scss'],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'DD/MM/YYYY'},
   ]

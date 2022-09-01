@@ -28,7 +28,7 @@ export class ChartWeightComponent implements OnInit {
     background: 'transparent',
       xAxis: {
         type: 'category',
-        data: chartData.map(w =>({
+        data: chartData.reverse().map(w =>({
           value:w.date.toString()
         }))
       },
